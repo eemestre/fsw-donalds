@@ -8,9 +8,11 @@ const ProductsPage = () => {
   const [num, setNum] = useState(0);
 
   return (
-    <div className="p-6 gap-5">
+    <div className="flex flex-col p-6 gap-3">
       <h1>Clique no botão!</h1>
-      <Button onClick={() => setNum(num + 1)}>{num}</Button>
+      <Button className="w-fit" onClick={() => setNum(num + 1)}>
+        {num}
+      </Button>
       <Input />
     </div>
   );
