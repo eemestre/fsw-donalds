@@ -1,21 +1,13 @@
 "use client";
 
 import { Prisma } from "@prisma/client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { formatCurrency } from "@/helpers/currency/formatCurrency";
 import { Button } from "@/components/ui/button";
 import { ChefHatIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CartContext } from "../../context/cart";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import CartSheet from "../../components/cartSheet";
 
 interface ProductDetailsProps {
@@ -32,7 +24,13 @@ interface ProductDetailsProps {
 }
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
-  const { toggleCart } = useContext(CartContext);
+  const [quantity, setQuantity] = useState<number>(1);
+  const { toggleCart, addProduct } = useContext(CartContext);
+
+  useEffect(() => {
+    toggleCart(false);
+  }, []);
+
   const increase = () => {
     if (quantity < 99) {
       setQuantity(quantity + 1);
@@ -46,10 +44,13 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
   };
 
   const handleAddToCart = () => {
+    addProduct({
+      ...product,
+      quantity,
+    });
     toggleCart();
   };
 
-  const [quantity, setQuantity] = useState<number>(1);
   return (
     <>
       <div className="relative z-50 rounded-t-3xl p-5 mt-[-1.5rem] bg-white flex-auto flex flex-col overflow-hidden">
@@ -69,9 +70,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           </div>
 
           {/* PRODUCT NAME */}
-          <h2 className="text-xl mt-1 font-semibold">
-            {product.restaurant.name}
-          </h2>
+          <h2 className="text-xl mt-1 font-semibold">{product.name}</h2>
 
           {/* PRICE AND QUANTITY  */}
           <div className="flex items-center justify-between mt-3">
