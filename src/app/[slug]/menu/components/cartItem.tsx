@@ -1,20 +1,23 @@
 import { formatCurrency } from "@/helpers/currency/formatCurrency";
-import { ICartItem } from "../context/cart";
+import { CartContext, ICartItem } from "../context/cart";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon, ChevronRightIcon, TrashIcon } from "lucide-react";
+import { useContext } from "react";
 
 interface CartItemProps {
   item: ICartItem;
 }
 
 const CartItem = ({ item }: CartItemProps) => {
+  const { decreaseProductQuantity, increaseProductQuantity, removeProduct } =
+    useContext(CartContext);
   return (
     <div className="flex items-center justify-between">
       {/* LEFT */}
       <div className="flex items-start gap-3">
-        {/* ITEM IMAGE */}
-        <div className="relative w-[77px] h-[77px] bg-gray-100 rounded-lg">
+        {/* IMAGE */}
+        <div className="relative min-w-[75px] min-h-[75px] bg-gray-100 rounded-lg">
           <Image
             src={item.imageUrl}
             alt={item.name}
@@ -25,17 +28,27 @@ const CartItem = ({ item }: CartItemProps) => {
 
         {/* NAME, PRICE AND QUANTITY */}
         <div className="space-y-1">
-          <p className="text-sm max-w-[90%] truncate text-ellipsis">
-            {item.name}
-          </p>
+          {/* NAME */}
+          <p className="text-sm w-[90%] line-clamp-1">{item.name}</p>
+
+          {/* PRICE */}
           <p className="text-sm font-semibold">{formatCurrency(item.price)}</p>
+
           {/* QUANTITY */}
           <div className="flex items-center text-center gap-1">
-            <Button variant="outline" className="h-7 w-7 rounded-lg">
+            <Button
+              onClick={() => decreaseProductQuantity(item.id)}
+              variant="outline"
+              className="h-7 w-7 rounded-lg"
+            >
               <ChevronLeftIcon />
             </Button>
             <p className="text-xs w-7 ">{item.quantity}</p>
-            <Button variant={"destructive"} className="h-7 w-7 rounded-lg">
+            <Button
+              onClick={() => increaseProductQuantity(item.id)}
+              variant={"destructive"}
+              className="h-7 w-7 rounded-lg"
+            >
               <ChevronRightIcon />
             </Button>
           </div>
@@ -43,7 +56,11 @@ const CartItem = ({ item }: CartItemProps) => {
       </div>
 
       {/* DELETE BUTTON */}
-      <Button variant="outline" className="h-7 w-7 rounded-lg">
+      <Button
+        onClick={() => removeProduct(item.id)}
+        variant="outline"
+        className="h-7 w-7 rounded-lg"
+      >
         <TrashIcon />
       </Button>
     </div>
