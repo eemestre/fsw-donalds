@@ -67,7 +67,7 @@ const MenuPageCategories = ({ restaurant }: MenuCategoriesProps) => {
       </ScrollArea>
 
       <h3 className="font-semibold px-5 pt-2">{selectedCategory.name}</h3>
-      <Products products={selectedCategory.products} />
+      <Products products={selectedCategory.products} slug={restaurant.slug} />
     </div>
   );
 };

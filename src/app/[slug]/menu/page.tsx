@@ -1,6 +1,6 @@
 import { db } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import MenuHeader from "./components/header";
+import MenuHeader from "./components/menuHeader";
 import MenuPageCategories from "./components/categories";
 
 interface MenuPageParams {

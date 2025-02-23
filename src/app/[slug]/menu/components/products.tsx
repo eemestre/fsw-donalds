@@ -2,18 +2,20 @@ import { Product } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
 import { styleText } from "util";
+import { formatCurrency } from "@/helpers/currency/formatCurrency";
 
 interface ProductsProps {
   products: Product[];
+  slug: string;
 }
 
-const Products = ({ products }: ProductsProps) => {
+const Products = ({ products, slug }: ProductsProps) => {
   return (
     <div className="px-5 space-y-3">
       {products.map((product) => (
         <Link
           key={product.id}
-          href="/"
+          href={`/${slug}/menu/${product.id}`}
           className="flex items-center justify-between gap-10 py-3 border-b"
         >
           {/* DIV LEFT */}
@@ -23,10 +25,7 @@ const Products = ({ products }: ProductsProps) => {
               {product.description}
             </p>
             <h3 className="pt-3 font-semibold">
-              {Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(product.price)}
+              {formatCurrency(product.price)}
             </h3>
           </div>
 
