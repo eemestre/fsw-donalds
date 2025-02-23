@@ -3,16 +3,16 @@
 import { Product } from "@prisma/client";
 import { createContext, ReactNode, useState } from "react";
 
-interface CartProduct
+export interface ICartItem
   extends Pick<Product, "name" | "id" | "price" | "imageUrl"> {
   quantity: number;
 }
 
 export interface ICartContext {
   isOpen: boolean;
-  products: CartProduct[];
+  products: ICartItem[];
   toggleCart: (value?: boolean) => void;
-  addProduct: (product: CartProduct) => void;
+  addProduct: (product: ICartItem) => void;
 }
 
 export const CartContext = createContext<ICartContext>({
@@ -23,7 +23,7 @@ export const CartContext = createContext<ICartContext>({
 });
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<CartProduct[]>([]);
+  const [products, setProducts] = useState<ICartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleCart = (value?: boolean) => {
@@ -34,7 +34,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const addProduct = (product: CartProduct) => {
+  const addProduct = (product: ICartItem) => {
     const isOnCart = products.some((p) => p.id === product.id);
     if (!isOnCart) {
       setProducts([...products, product]);

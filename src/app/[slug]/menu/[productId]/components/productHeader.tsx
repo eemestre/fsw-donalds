@@ -15,7 +15,7 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
 
   return (
     <div>
-      <div className="relative w-full h-[332px] bg-slate-200">
+      <div className="relative w-full h-[332px] bg-gray-100">
         <Button
           variant="secondary"
           size="icon"

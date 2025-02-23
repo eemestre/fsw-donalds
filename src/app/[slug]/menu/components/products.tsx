@@ -30,7 +30,7 @@ const Products = ({ products, slug }: ProductsProps) => {
           </div>
 
           {/* DIV RIGHT */}
-          <div className="relative min-w-[120px] min-h-[82px]">
+          <div className="relative min-w-[120px] min-h-[82px] bg-gray-100 rounded-2xl">
             <Image
               src={product.imageUrl}
               alt={product.name}
