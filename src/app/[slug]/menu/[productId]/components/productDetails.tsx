@@ -6,6 +6,7 @@ import Image from "next/image";
 import { formatCurrency } from "@/helpers/currency/formatCurrency";
 import { Button } from "@/components/ui/button";
 import { ChefHatIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface ProductDetailsProps {
   product: Prisma.ProductGetPayload<{
@@ -33,9 +34,11 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
     }
   };
 
+  const handleAddToCart = () => {};
+
   const [quantity, setQuantity] = useState<number>(1);
   return (
-    <div className="relative z-50 rounded-t-3xl p-5 mt-[-1.5rem] bg-white flex-auto flex flex-col">
+    <div className="relative z-50 rounded-t-3xl p-5 mt-[-1.5rem] bg-white flex-auto flex flex-col overflow-hidden">
       <div className="flex-auto">
         {/* RESTAURANT */}
         <div className="flex items-center gap-1.5">
@@ -57,7 +60,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         </h2>
 
         {/* PRICE AND QUANTITY  */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-3">
           <h3 className="text-xl font-semibold">
             {formatCurrency(product.price)}
           </h3>
@@ -79,9 +82,11 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             </Button>
           </div>
         </div>
+      </div>
 
+      <ScrollArea className="h-full my-3">
         {/* DESCRIPTION */}
-        <div className="mt-6 space-y-3">
+        <div className="space-y-3">
           <h4 className="font-semibold">Sobre</h4>
           <p className="text-sm text-muted-foreground">{product.description}</p>
         </div>
@@ -92,11 +97,20 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             <ChefHatIcon />
             <h4 className="font-semibold">Ingredientes</h4>
           </div>
-          <p className="text-sm text-muted-foreground">{product.ingredients}</p>
+          <ul className="list-disc px-5">
+            {product.ingredients.map((ingredient) => (
+              <li key={ingredient} className="text-sm text-muted-foreground">
+                {ingredient}
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
+      </ScrollArea>
+
       {/* ADICIONAR À SACOLA */}
-      <Button className="rounded-full w-full mt-6">Adicionar à sacola</Button>
+      <Button className="rounded-full w-full" onClick={handleAddToCart}>
+        Adicionar à sacola
+      </Button>
     </div>
   );
 };
