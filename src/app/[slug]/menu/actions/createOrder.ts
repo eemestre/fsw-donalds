@@ -60,5 +60,7 @@ export const createOrder = async (props: CreateOrderProps) => {
     },
   });
 
-  redirect(`/${props.slug}/orders`);
+  redirect(
+    `/${props.slug}/orders?cpf=${removeCpfPunctuation(props.customerCpf)}`
+  );
 };
