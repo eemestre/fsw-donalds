@@ -2,10 +2,11 @@ import { db } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import MenuHeader from "./components/menuHeader";
 import MenuPageCategories from "./components/categories";
+import { ConsumptionMethod } from "@prisma/client";
 
 interface MenuPageParams {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ consumptionMethod: string }>;
+  searchParams: Promise<{ consumptionMethod: ConsumptionMethod }>;
 }
 
 const isConsumptionMethodValid = (value: string) => {
@@ -27,7 +28,10 @@ const MenuPage = async ({ params, searchParams }: MenuPageParams) => {
   return (
     <div>
       <MenuHeader restaurant={restaurant} />
-      <MenuPageCategories restaurant={restaurant} />
+      <MenuPageCategories
+        restaurant={restaurant}
+        consumptionMethod={consumptionMethod}
+      />
     </div>
   );
 };

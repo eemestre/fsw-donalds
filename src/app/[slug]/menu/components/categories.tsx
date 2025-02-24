@@ -2,13 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Prisma } from "@prisma/client";
+import { ConsumptionMethod, Prisma } from "@prisma/client";
 import { ClockIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import Products from "./products";
 
 interface MenuCategoriesProps {
+  consumptionMethod: ConsumptionMethod;
   restaurant: Prisma.RestaurantGetPayload<{
     include: {
       menuCategories: {
@@ -22,7 +23,10 @@ type MenuCategoryWithProducts = Prisma.MenuCategoryGetPayload<{
   include: { products: true };
 }>;
 
-const MenuPageCategories = ({ restaurant }: MenuCategoriesProps) => {
+const MenuPageCategories = ({
+  restaurant,
+  consumptionMethod,
+}: MenuCategoriesProps) => {
   const [selectedCategory, setSelectedCategory] =
     useState<MenuCategoryWithProducts>(restaurant.menuCategories[0]);
 
@@ -67,7 +71,11 @@ const MenuPageCategories = ({ restaurant }: MenuCategoriesProps) => {
       </ScrollArea>
 
       <h3 className="font-semibold px-5 pt-2">{selectedCategory.name}</h3>
-      <Products products={selectedCategory.products} slug={restaurant.slug} />
+      <Products
+        products={selectedCategory.products}
+        slug={restaurant.slug}
+        consumptionMethod={consumptionMethod}
+      />
     </div>
   );
 };

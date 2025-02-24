@@ -1,4 +1,4 @@
-import { Product } from "@prisma/client";
+import { ConsumptionMethod, Product } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
 import { styleText } from "util";
@@ -7,15 +7,16 @@ import { formatCurrency } from "@/helpers/currency/formatCurrency";
 interface ProductsProps {
   products: Product[];
   slug: string;
+  consumptionMethod: ConsumptionMethod;
 }
 
-const Products = ({ products, slug }: ProductsProps) => {
+const Products = ({ products, slug, consumptionMethod }: ProductsProps) => {
   return (
     <div className="px-5 space-y-3">
       {products.map((product) => (
         <Link
           key={product.id}
-          href={`/${slug}/menu/${product.id}`}
+          href={`/${slug}/menu/${product.id}?consumptionMethod=${consumptionMethod}`}
           className="flex items-center justify-between gap-10 py-3 border-b"
         >
           {/* DIV LEFT */}
