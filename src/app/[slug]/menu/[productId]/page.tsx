@@ -34,7 +34,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
   return (
     <div className="flex flex-col h-full">
       <ClientButton type="back" />
-      <ClientButton type="scroll" />
+      <ClientButton type="scroll" slug={slug} />
       <ProductHeader product={product} />
       <ProductDetails product={product} />
     </div>

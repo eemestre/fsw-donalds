@@ -5,6 +5,7 @@ import OrderList from "./components/orderList";
 import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react";
 import OrderListHeader from "./components/orderListHeader";
+import { notFound } from "next/navigation";
 
 interface OrderPageProps {
   params: Promise<{ slug: string }>;
@@ -14,6 +15,15 @@ interface OrderPageProps {
 const OrdersPage = async ({ searchParams, params }: OrderPageProps) => {
   const { slug } = await params;
   const { cpf } = await searchParams;
+  const restaurant = await db.restaurant.findUnique({
+    where: {
+      slug,
+    },
+  });
+
+  if (!restaurant) {
+    return notFound();
+  }
 
   if (!cpf || !isValidCpf(cpf)) {
     return <CpfForm />;

@@ -29,7 +29,7 @@ const MenuPage = async ({ params, searchParams }: MenuPageParams) => {
   return (
     <div>
       <ClientButton type="back" />
-      <ClientButton type="scroll" />
+      <ClientButton type="scroll" slug={slug} />
       <MenuHeader restaurant={restaurant} />
       <MenuPageCategories
         restaurant={restaurant}

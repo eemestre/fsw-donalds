@@ -2,13 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react";
-import router, { useRouter } from "next/navigation";
+import router, { redirect, useRouter } from "next/navigation";
 
 interface ClientButtonProps {
   type: string;
+  slug?: string;
 }
 
-const ClientButton = ({ type }: ClientButtonProps) => {
+const ClientButton = ({ type, slug }: ClientButtonProps) => {
   const router = useRouter();
 
   if (type === "back") {
@@ -28,6 +29,7 @@ const ClientButton = ({ type }: ClientButtonProps) => {
         variant="secondary"
         size="icon"
         className="fixed top-4 right-4 rounded-full z-50"
+        onClick={() => redirect(`/${slug}/orders`)}
       >
         <ScrollTextIcon />
       </Button>
