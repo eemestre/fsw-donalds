@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import MenuHeader from "./components/menuHeader";
 import MenuPageCategories from "./components/categories";
 import { ConsumptionMethod } from "@prisma/client";
+import ClientButton from "@/app/components/ClientButton";
 
 interface MenuPageParams {
   params: Promise<{ slug: string }>;
@@ -27,6 +28,8 @@ const MenuPage = async ({ params, searchParams }: MenuPageParams) => {
 
   return (
     <div>
+      <ClientButton type="back" />
+      <ClientButton type="scroll" />
       <MenuHeader restaurant={restaurant} />
       <MenuPageCategories
         restaurant={restaurant}

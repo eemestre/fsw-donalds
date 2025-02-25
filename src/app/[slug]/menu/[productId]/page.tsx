@@ -2,6 +2,7 @@ import { db } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import ProductHeader from "./components/productHeader";
 import ProductDetails from "./components/productDetails";
+import ClientButton from "@/app/components/ClientButton";
 
 interface ProductPageProps {
   params: Promise<{ slug: string; productId: string }>;
@@ -32,6 +33,8 @@ const ProductPage = async ({ params }: ProductPageProps) => {
 
   return (
     <div className="flex flex-col h-full">
+      <ClientButton type="back" />
+      <ClientButton type="scroll" />
       <ProductHeader product={product} />
       <ProductDetails product={product} />
     </div>

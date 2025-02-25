@@ -12,12 +12,12 @@ interface ProductsProps {
 
 const Products = ({ products, slug, consumptionMethod }: ProductsProps) => {
   return (
-    <div className="px-5 space-y-3">
+    <div className="px-5">
       {products.map((product) => (
         <Link
           key={product.id}
           href={`/${slug}/menu/${product.id}?consumptionMethod=${consumptionMethod}`}
-          className="flex items-center justify-between gap-10 py-3 border-b"
+          className="flex items-center justify-between gap-10 py-4 border-b"
         >
           {/* DIV LEFT */}
           <div>

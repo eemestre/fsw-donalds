@@ -4,6 +4,7 @@ import CpfForm from "./components/cpfForm";
 import OrderList from "./components/orderList";
 import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react";
+import OrderListHeader from "./components/orderListHeader";
 
 interface OrderPageProps {
   params: Promise<{ slug: string }>;
@@ -46,7 +47,8 @@ const OrdersPage = async ({ searchParams, params }: OrderPageProps) => {
 
   return (
     <div className="flex flex-col h-full p-6">
-      <OrderList orders={orders} />
+      <OrderListHeader slug={slug} />
+      <OrderList orders={orders} slug={slug} />
     </div>
   );
 };

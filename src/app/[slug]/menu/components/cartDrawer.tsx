@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/drawer";
 
 import { z } from "zod";
-import { isValidCpf } from "../helpers/cpf";
+import { isValidCpf, removeCpfPunctuation } from "../helpers/cpf";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -27,7 +27,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { PatternFormat } from "react-number-format";
 import { createOrder } from "../actions/createOrder";
-import { useParams, useSearchParams } from "next/navigation";
+import { redirect, useParams, useSearchParams } from "next/navigation";
 import { ConsumptionMethod } from "@prisma/client";
 import { useContext, useTransition } from "react";
 import { CartContext } from "../context/cart";
@@ -59,7 +59,7 @@ interface CartDrawerProps {
 const CartDrawer = ({ open, onOpenChange }: CartDrawerProps) => {
   const searchParams = useSearchParams();
   const { slug } = useParams<{ slug: string }>();
-  const { products, toggleCart } = useContext(CartContext);
+  const { products, toggleCart, emptyCart } = useContext(CartContext);
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<FormSchema>({
@@ -87,8 +87,9 @@ const CartDrawer = ({ open, onOpenChange }: CartDrawerProps) => {
         });
 
         onOpenChange(false);
-        toggleCart();
+        emptyCart();
         toast.success("Pedido finalizado com sucesso");
+        redirect(`/${slug}/orders?cpf=${removeCpfPunctuation(data.cpf)}`);
       });
     } catch (error) {
       console.error(error);
