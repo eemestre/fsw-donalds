@@ -1,10 +1,18 @@
-import Image from "next/image";
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
+import { useEffect } from "react";
 
 const Home = () => {
+  useEffect(() => {
+    redirect("/fsw-donalds");
+  }, []);
+
   return (
-    <>
-      <h1>Testezada</h1>
-    </>
+    <div className="flex h-full items-center justify-center">
+      <h1 className="text-xl">Redirecionado para FSW Donalds</h1>
+    </div>
   );
 };
 
